@@ -60,7 +60,7 @@ def create_root(start: Callable[[], None], destroy: Callable[[], None]) -> ctk.C
 
     root = CTk()
     root.minsize(ROOT_WIDTH, ROOT_HEIGHT)
-    root.title(f'{root.metadata.name} {root.metadata.version}')
+    root.title(f'{root_folder.metadata.name} {root_folder.metadata.version}')
     root.configure()
     root.protocol('WM_DELETE_WINDOW', lambda: destroy())
 
@@ -68,15 +68,15 @@ def create_root(start: Callable[[], None], destroy: Callable[[], None]) -> ctk.C
     source_label.place(relx=0.1, rely=0.1, relwidth=0.3, relheight=0.25)
     source_label.drop_target_register(DND_ALL)
     source_label.dnd_bind('<<Drop>>', lambda event: select_source_path(event.data))
-    if root.globals.source_path:
-        select_source_path(root.globals.source_path)
+    if root_folder.globals.source_path:
+        select_source_path(root_folder.globals.source_path)
 
     target_label = ctk.CTkLabel(root, text=None, fg_color=ctk.ThemeManager.theme.get('RoopDropArea').get('fg_color'))
     target_label.place(relx=0.6, rely=0.1, relwidth=0.3, relheight=0.25)
     target_label.drop_target_register(DND_ALL)
     target_label.dnd_bind('<<Drop>>', lambda event: select_target_path(event.data))
-    if root.globals.target_path:
-        select_target_path(root.globals.target_path)
+    if root_folder.globals.target_path:
+        select_target_path(root_folder.globals.target_path)
 
     source_button = ctk.CTkButton(root, text='Select a face', cursor='hand2', command=lambda: select_source_path())
     source_button.place(relx=0.1, rely=0.4, relwidth=0.3, relheight=0.1)
@@ -84,20 +84,20 @@ def create_root(start: Callable[[], None], destroy: Callable[[], None]) -> ctk.C
     target_button = ctk.CTkButton(root, text='Select a target', cursor='hand2', command=lambda: select_target_path())
     target_button.place(relx=0.6, rely=0.4, relwidth=0.3, relheight=0.1)
 
-    keep_fps_value = ctk.BooleanVar(value=root.globals.keep_fps)
-    keep_fps_checkbox = ctk.CTkSwitch(root, text='Keep target fps', variable=keep_fps_value, cursor='hand2', command=lambda: setattr(root.globals, 'keep_fps', not root.globals.keep_fps))
+    keep_fps_value = ctk.BooleanVar(value=root_folder.globals.keep_fps)
+    keep_fps_checkbox = ctk.CTkSwitch(root, text='Keep target fps', variable=keep_fps_value, cursor='hand2', command=lambda: setattr(root_folder.globals, 'keep_fps', not root_folder.globals.keep_fps))
     keep_fps_checkbox.place(relx=0.1, rely=0.6)
 
-    keep_frames_value = ctk.BooleanVar(value=root.globals.keep_frames)
-    keep_frames_switch = ctk.CTkSwitch(root, text='Keep temporary frames', variable=keep_frames_value, cursor='hand2', command=lambda: setattr(root.globals, 'keep_frames', keep_frames_value.get()))
+    keep_frames_value = ctk.BooleanVar(value=root_folder.globals.keep_frames)
+    keep_frames_switch = ctk.CTkSwitch(root, text='Keep temporary frames', variable=keep_frames_value, cursor='hand2', command=lambda: setattr(root_folder.globals, 'keep_frames', keep_frames_value.get()))
     keep_frames_switch.place(relx=0.1, rely=0.65)
 
-    skip_audio_value = ctk.BooleanVar(value=root.globals.skip_audio)
-    skip_audio_switch = ctk.CTkSwitch(root, text='Skip target audio', variable=skip_audio_value, cursor='hand2', command=lambda: setattr(root.globals, 'skip_audio', skip_audio_value.get()))
+    skip_audio_value = ctk.BooleanVar(value=root_folder.globals.skip_audio)
+    skip_audio_switch = ctk.CTkSwitch(root, text='Skip target audio', variable=skip_audio_value, cursor='hand2', command=lambda: setattr(root_folder.globals, 'skip_audio', skip_audio_value.get()))
     skip_audio_switch.place(relx=0.6, rely=0.6)
 
-    many_faces_value = ctk.BooleanVar(value=root.globals.many_faces)
-    many_faces_switch = ctk.CTkSwitch(root, text='Many faces', variable=many_faces_value, cursor='hand2', command=lambda: setattr(root.globals, 'many_faces', many_faces_value.get()))
+    many_faces_value = ctk.BooleanVar(value=root_folder.globals.many_faces)
+    many_faces_switch = ctk.CTkSwitch(root, text='Many faces', variable=many_faces_value, cursor='hand2', command=lambda: setattr(root_folder.globals, 'many_faces', many_faces_value.get()))
     many_faces_switch.place(relx=0.6, rely=0.65)
 
     start_button = ctk.CTkButton(root, text='Start', cursor='hand2', command=lambda: select_output_path(start))
